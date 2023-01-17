@@ -1,0 +1,38 @@
+{
+    "selected_articles_path": {
+        "acm": "/home/cristiano/Documents/Projects/Mestrado/SLR-Unstructured/selected-articles/acm",
+        "ieee": "/home/cristiano/Documents/Projects/Mestrado/SLR-Unstructured/selected-articles/ieee",
+        "science": "/home/cristiano/Documents/Projects/Mestrado/SLR-Unstructured/selected-articles/science",
+        "springer": "/home/cristiano/Documents/Projects/Mestrado/SLR-Unstructured/selected-articles/springer",
+        "wiley": "/home/cristiano/Documents/Projects/Mestrado/SLR-Unstructured/selected-articles/wiley"
+    },
+    "count-all": {
+        "acm": "518",
+        "ieee": "58",
+        "science": "429",
+        "springer": "268",
+        "wiley": "513"
+    },
+    "queries": {
+        "acm": {
+            "title": "(\"unstructured\" OR \"offroad\" OR \"semi-structured\" OR \"non-urban\") AND (\"path planning\" OR \"motion planning\" OR \"trajectory planning\" OR \"self-driving\" OR \"autonomous\") NOT \"UAV\" NOT \"indoor\" NOT \"UVMS\" NOT \"water\"  NOT \"submerged\"   NOT \"SOCIAL\" ",
+            "abstract": "(\"unstructured\" OR \"offroad\" OR \"semi-structured\" OR \"non-urban\") AND (\"path planning\" OR \"motion planning\" OR \"trajectory planning\" OR \"self-driving\" OR \"autonomous\") NOT \"UAV\" NOT \"indoor\"  NOT \"UVMS\" NOT \"water\"  NOT \"submerged\"  NOT \"SOCIAL\"",
+            "keywords": "(\"unstructured\" OR \"offroad\" OR \"semi-structured\" OR \"non-urban\") AND (\"path planning\" OR \"motion planning\" OR \"trajectory planning\" OR \"self-driving\" OR \"autonomous\") NOT \"UAV\" NOT \"indoor\"  NOT \"UVMS\" NOT \"water\"  NOT \"submerged\"  NOT \"SOCIAL\""
+        },
+        "ieee": {
+            "title": "(\"Document Title\":\"unstructured\" OR \"Document Title\":\"offroad\" OR \"Document Title\":\"semi-structured\" OR \"Document Title\":\"non-urban\") AND (\"Document Title\":\"path planning\" OR \"Document Title\":\"motion planning\" OR \"Document Title\":\"trajectory planning\" OR \"Document Title\":\"self-driving\" OR \"Document Title\":\"autonomous\")",
+            "abstract": "(\"Abstract\":\"unstructured\" OR \"Abstract\":\"offroad\" OR \"Abstract\":\"semi-structured\" OR \"Abstract\":\"non-urban\") AND (\"Abstract\":\"path planning\" OR \"Abstract\":\"motion planning\" OR \"Abstract\":\"trajectory planning\" OR \"Abstract\":\"self-driving\" OR \"Abstract\":\"autonomous\")",
+            "keywords": "(\"Author Keywords\":\"unstructured\" OR \"Author Keywords\":\"offroad\" OR \"Author Keywords\":\"semi-structured\" OR \"Author Keywords\":\"non-urban\") AND (\"Author Keywords\":\"path planning\" OR \"Author Keywords\":\"motion planning\" OR \"Author Keywords\":\"trajectory planning\" OR \"Author Keywords\":\"self-driving\" OR \"Author Keywords\":\"autonomous\")"
+        },
+        "science": {
+            "query": "(\"unstructured\" OR \"offroad\" OR \"semi-structured\" OR \"non-urban\") AND (\"path planning\" OR \"motion planning\" OR \"trajectory planning\" OR \"self-driving\" OR \"autonomous\")"
+        },
+        "springer": {
+            "query": "(\"unstructured\" OR \"offroad\" OR \"semi-structured\" OR \"non-urban\") AND (\"path planning\" OR \"motion planning\" OR \"trajectory planning\" OR \"self-driving\" OR \"autonomous\")",
+            "append_query_text": "discipline: Computer Science + Sub-discipline: Artificial Intelligence + filter by Article"
+        },
+        "wiley": {
+            "query": "(\"unstructured\" OR \"offroad\" OR \"semi-structured\" OR \"non-urban\") AND (\"path planning\" OR \"motion planning\" OR \"trajectory planning\" OR \"self-driving\" OR \"autonomous\")"
+        }
+    }
+}
