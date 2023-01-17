@@ -8,6 +8,9 @@ from model.Article import *
 
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 import sys
 sys.path.append('../model')
@@ -65,6 +68,7 @@ class HtmlParser:
             HtmlParser.selenium_browser = HtmlParser.load_browser()
 
         HtmlParser.selenium_browser.get(url)
+        
         file = open(filename, mode='w')
         file.write(HtmlParser.selenium_browser.page_source)
         file.close()
@@ -86,6 +90,25 @@ class HtmlParser:
             print(f'link: {url}\n')
             print(f'command: {command}\n')
             exit(0)
+
+    def download_url_selenium_wait_for_element_by_id(filename: str, url: str, id: str) -> str:
+        if os.path.exists(filename):
+            return filename
+            
+        if HtmlParser.selenium_browser == None:
+            HtmlParser.selenium_browser = HtmlParser.load_browser()
+            #HtmlParser.selenium_browser.implicitly_wait(30)
+            HtmlParser.selenium_browser.get(url)
+            try:
+                WebDriverWait(HtmlParser.selenium_browser, 30).until(
+                    EC.presence_of_element_located((By.ID, id))
+                )
+                file = open(filename, mode='w')
+                file.write(HtmlParser.selenium_browser.page_source)
+                file.close()
+                return filename
+            except:
+                return None
 
     def read_file(filename: str, remove_after_read: bool = False) -> BeautifulSoup:
         file = open(filename, mode='r')

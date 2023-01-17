@@ -1,0 +1,117 @@
+1673961323839	geckodriver	INFO	Listening on 127.0.0.1:37085
+1673961324345	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--headless" "--window-size=1920,1080" "--remote-debugging-port" "46235" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileKh1ZPM"
+*** You are running in headless mode.
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+1673961324890	Marionette	INFO	Marionette enabled
+1673961324897	Marionette	INFO	Listening on port 44383
+Read port: 44383
+WebDriver BiDi listening on ws://127.0.0.1:46235
+1673961325047	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileKh1ZPM/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:46235/devtools/browser/8d09ab00-e561-43b4-9ac0-96c59a36a1c1
+1673961406383	geckodriver	INFO	Listening on 127.0.0.1:51287
+1673961406390	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--headless" "--window-size=1920,1080" "--remote-debugging-port" "51187" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileGTxNjp"
+*** You are running in headless mode.
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+1673961406642	Marionette	INFO	Marionette enabled
+1673961406645	Marionette	INFO	Listening on port 40867
+Read port: 40867
+WebDriver BiDi listening on ws://127.0.0.1:51187
+1673961406780	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileGTxNjp/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:51187/devtools/browser/cafe7fab-51be-4b08-81c8-a06cda527cfa
+1673963154211	geckodriver	INFO	Listening on 127.0.0.1:36159
+1673963154216	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--headless" "--window-size=1920,1080" "--remote-debugging-port" "60707" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilekOn8qz"
+*** You are running in headless mode.
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+1673963154472	Marionette	INFO	Marionette enabled
+1673963154475	Marionette	INFO	Listening on port 34517
+Read port: 34517
+WebDriver BiDi listening on ws://127.0.0.1:60707
+1673963154591	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilekOn8qz/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:60707/devtools/browser/bd8eef60-eb60-40b2-be70-35814f9c79bb
+1673963289218	geckodriver	INFO	Listening on 127.0.0.1:55887
+1673963289224	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--headless" "--window-size=1920,1080" "--remote-debugging-port" "38153" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileLhzr8w"
+*** You are running in headless mode.
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+1673963289471	Marionette	INFO	Marionette enabled
+1673963289474	Marionette	INFO	Listening on port 42897
+WebDriver BiDi listening on ws://127.0.0.1:38153
+Read port: 42897
+1673963289664	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileLhzr8w/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:38153/devtools/browser/b28a6113-cafe-4ee9-b12d-132011edf2d9
+1673963354278	geckodriver	INFO	Listening on 127.0.0.1:58639
+1673963354283	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--headless" "--window-size=1920,1080" "--remote-debugging-port" "47909" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilePRzykc"
+*** You are running in headless mode.
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+1673963354542	Marionette	INFO	Marionette enabled
+1673963354545	Marionette	INFO	Listening on port 45347
+Read port: 45347
+WebDriver BiDi listening on ws://127.0.0.1:47909
+1673963354621	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilePRzykc/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:47909/devtools/browser/4a1665c2-5288-4404-bd8a-089115d4e032
+1673963374710	geckodriver	INFO	Listening on 127.0.0.1:52409
+1673963374715	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--headless" "--window-size=1920,1080" "--remote-debugging-port" "35883" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofile51nNVx"
+*** You are running in headless mode.
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+1673963374963	Marionette	INFO	Marionette enabled
+1673963374966	Marionette	INFO	Listening on port 39597
+WebDriver BiDi listening on ws://127.0.0.1:35883
+Read port: 39597
+1673963375166	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofile51nNVx/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:35883/devtools/browser/631a7a4c-601d-4dd5-a7a9-d0dd19a6eaf7
+1673963395380	geckodriver	INFO	Listening on 127.0.0.1:56365
+1673963395385	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--headless" "--window-size=1920,1080" "--remote-debugging-port" "38397" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofiler1SBZ6"
+*** You are running in headless mode.
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+1673963395642	Marionette	INFO	Marionette enabled
+1673963395646	Marionette	INFO	Listening on port 43877
+Read port: 43877
+WebDriver BiDi listening on ws://127.0.0.1:38397
+1673963395765	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofiler1SBZ6/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:38397/devtools/browser/5a44c11e-cfee-425f-bee8-752db51725ed
+1673963618423	geckodriver	INFO	Listening on 127.0.0.1:33305
+1673963618427	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--headless" "--window-size=1920,1080" "--remote-debugging-port" "47437" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileRqX8WI"
+*** You are running in headless mode.
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+1673963618681	Marionette	INFO	Marionette enabled
+1673963618684	Marionette	INFO	Listening on port 37099
+Read port: 37099
+WebDriver BiDi listening on ws://127.0.0.1:47437
+1673963618810	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileRqX8WI/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:47437/devtools/browser/c6542f2c-f2be-47bf-8e43-35d9f1c05f28
+1673963695784	geckodriver	INFO	Listening on 127.0.0.1:33521
+1673963695790	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--headless" "--window-size=1920,1080" "--remote-debugging-port" "44195" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileVBgUlg"
+*** You are running in headless mode.
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+1673963696048	Marionette	INFO	Marionette enabled
+1673963696051	Marionette	INFO	Listening on port 34639
+Read port: 34639
+WebDriver BiDi listening on ws://127.0.0.1:44195
+1673963696123	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileVBgUlg/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:44195/devtools/browser/ea643842-8083-4b52-ac3b-76c245b76f14
+1673969602285	Marionette	INFO	Stopped listening on port 43877
+1673969602285	Marionette	INFO	Stopped listening on port 42897
+1673969602286	Marionette	INFO	Stopped listening on port 37099
+1673969602292	Marionette	INFO	Stopped listening on port 34517
+1673969602297	Marionette	INFO	Stopped listening on port 44383
+1673969602300	Marionette	INFO	Stopped listening on port 39597
+1673969602304	Marionette	INFO	Stopped listening on port 34639
+1673969602310	Marionette	INFO	Stopped listening on port 45347
+1673969602313	Marionette	INFO	Stopped listening on port 40867

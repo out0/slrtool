@@ -11,7 +11,7 @@ from HtmlParser import *
 class SourceScienceDirect (ArticleSource):
 
     def __get_abstract(self, link: str) -> str:
-        tmp_abstract_file = "downloads/science/temp_abstract.html"
+        tmp_abstract_file = "temp_abstract.html"
         HtmlParser.download_url(tmp_abstract_file, link)
         html_doc = HtmlParser.read_file(
             tmp_abstract_file, remove_after_read=True)
@@ -46,6 +46,9 @@ class SourceScienceDirect (ArticleSource):
 
         for atag in article_tags:
             link = atag.get('href')
+            if (link[0:4].lower() != 'http'):
+                link = f"https://www.sciencedirect.com{link}"
+                
             text = HtmlParser.clean_str(atag.get_text())
             doi, abstract = self.__get_abstract(link)
             res.append(Article(title=text, url=link,
@@ -70,27 +73,29 @@ class SourceScienceDirect (ArticleSource):
 
     def buildUnfilteredArticleCSV(self, searchLink: SearchLinkResult, download_path: str, output_csv_path: str) -> None:
         os.system(f"mkdir -p {download_path}/science")
-        
-        first = f"{download_path}/science/science_0.html"
 
-        if not os.path.exists(first):
-            print(f"Currently, I don't support downloading the article list by myself due to some crazy iframes issues!! Please download them and save them on the path: {download_path}/science with names science_i.html, where i is the page number")
+        url = f"{searchLink.search_link}&show=100"
+        filename_list = []
+        filename_list.append(HtmlParser.download_url_selenium_wait_for_element_by_id(f"{download_path}/science/science_0.html", url=url, id="srp-results-list"))
+        if (filename_list[0] == None):
+            print(f"Could not find the element 'srp-results-list' with the list of articles from Science Direct url {url}. Maybe they have changed the layout?\n")
             exit(1)
 
-        filename_list = []
-        filename_list.append(first)
-        records = self.parseCountArticles(filename_list[0])
+        records = self.parseCountArticles(file=filename_list[0])
 
-        pages = ArticleSource.count_pages(records, 100)
-        print(f"found {records} records - expecting {pages}\n")
+        if (records == 0):
+            print(f"No records found. Check the source parser or the query\n")
+            exit(1)
+
+        pages = self.count_pages(records, 100)
+
+        print(f"found {records} records - expecting {pages} page\n")
 
         for i in range(1, pages):
-            if not os.path.exists(first):
-                print(f"* * Warning, a file {download_path}/science/science_{i}.html is missing, this means that their articles will be ignored!")
-            else:
-                filename_list.append(f"{download_path}/science/science_{i}.html")
+            url = f"{searchLink.search_link}&show=100&offset={i*100}"
+            filename_list.append(HtmlParser.download_url_selenium_wait_for_element_by_id(f"{download_path}/science/science_0.html", url=url, id="srp-results-list"))
 
         print("processing files\n")
 
-        self.parseListArticles(filename_list, f"{output_csv_path}/science.csv")
+        self.exportCSVData(filename_list, f"{output_csv_path}/science.csv")
 
