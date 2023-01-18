@@ -1,5 +1,4 @@
 #! /usr/bin/python3
-
 import sys
 sys.path.append('model/')
 sys.path.append('util/')
@@ -9,6 +8,7 @@ sys.path.append('sources/')
 from model.Article import *
 from util.LatexBuilder import *
 from util.HtmlParser import *
+from util.ExclusionFilter import *
 from sources.SourceWiley import *
 from sources.SourceSpringer import *
 from sources.SourceScienceDirect import *
@@ -47,68 +47,41 @@ class UI:
         print(result.search_link)
         print("\n")
 
-    def show_search_link_for_option(conf: dict, opt: int) -> None:
+    def select_source() -> Tuple[ArticleSource, str]:
+        opt = UI.menu_source_list()
+
+        match opt.rstrip():
+            case '1':
+                return [SourceAcm(), "acm"]
+            case '2':
+                return [SourceIEEE(), "ieee"]
+            case '3':
+                return [SourceScienceDirect(), "science"]
+            case '4':
+                return [SourceSpringer(), "springer"]
+            case '5':
+                return [SourceWiley(), "wiley"]
+            case _:
+                return [ None, None ]
+
+    def show_search_link(conf: dict) -> None:
         os.system('clear')
         terms = conf["queries"]
-
-        source:ArticleSource
-        terms_key:str
-
-        match opt.rstrip():
-            case '1':
-                source = SourceAcm()
-                terms_key = "acm"
-            case '2':
-                source = SourceIEEE()
-                terms_key = "ieee"
-            case '3':
-                source = SourceScienceDirect()
-                terms_key = "science"
-            case '4':
-                source = SourceSpringer()
-                terms_key = "springer"
-            case '5':
-                source = SourceWiley()
-                terms_key = "wiley"
-            case _:
-                return
-
-        UI.show_search_result(result=source.buildSearchLink(terms[terms_key])
-)
+        source, source_key = UI.select_source()
+        if source == None: return
+        UI.show_search_result(result=source.buildSearchLink(terms[source_key]))
         
-    def downloadAndBuildUnfilteredCSVForSourceOption(config: dict, opt: int) -> None: 
+    def download_and_build_unfiltered_CSV_for_source(config: dict) -> None: 
         os.system('clear')
         terms = config["queries"]
-
-        source:ArticleSource
-        source_key: dict
-
-        match opt.rstrip():
-            case '1':
-                source = SourceAcm()
-                source_key = "acm"
-            case '2':
-                source = SourceIEEE()
-                source_key = "ieee"
-            case '3':
-                source = SourceScienceDirect()
-                source_key = "science"
-            case '4':
-                source = SourceSpringer()
-                source_key = "springer"
-            case '5':
-                source = SourceWiley()
-                source_key = "wiley"
-            case _:
-                return
+        source, source_key = UI.select_source() 
+        if source == None: return
 
         os.system(f"mkdir -p data/raw")
         os.system(f"mkdir -p data/unfiltered")
         searchLink = source.buildSearchLink(terms[source_key])
         source.buildUnfilteredArticleCSV(searchLink, f"data/raw" ,f"data/unfiltered")
         print("Done. please check folder data/unfiltered \n")
-
-
 
 def count_files_in_path(path: str) -> int:
     return len(os.listdir(path))
@@ -147,8 +120,7 @@ def main() -> None:
             case '1':
                 os.system("clear")
                 print("Select a source")
-                search_link_opt = UI.menu_source_list()                
-                UI.show_search_link_for_option(config, search_link_opt)
+                UI.show_search_link(config)
                 return
             case '2':
                 latex_str = LatexBuilder.build_latex(config)
@@ -158,13 +130,21 @@ def main() -> None:
             case '3':
                 os.system("clear")
                 print("Select a source for trying to download it's source of articles based on the generated link.")
-                download_link_opt = UI.menu_source_list()
-                UI.downloadAndBuildUnfilteredCSVForSourceOption(config, download_link_opt)
+                UI.download_and_build_unfiltered_CSV_for_source(config)
+            case '4':
+                os.system("clear")
+                print("Applying exclusion criteria to the sources")
+
+                with open('filter_config.json', 'r') as filter_config:
+                    filter = ExclusionFilter(
+                        raw_path="data/raw",
+                        output_path="data/filtered",
+                        filter_articles_config=filter_config
+                    )
+                    filter.filter()
+                
             case _:
                 return
 
 if __name__ == "__main__":
     main()
-
-
-# <span class="result__count">518 Results</span>

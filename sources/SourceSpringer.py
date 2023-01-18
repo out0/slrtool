@@ -28,13 +28,13 @@ class SourceSpringer (ArticleSource):
             abstract = ""
 
             tmp_abstract_file = "temp_abstract.html"
-            HtmlParser.download_url(tmp_abstract_file, url)
-            abstract_html = HtmlParser.read_file(
-                tmp_abstract_file, remove_after_read=True)
-            abstract_tag = abstract_html.find(
-                'meta', {'property': 'og:description'})
-            if abstract_tag != None:
-                abstract = abstract_tag.get('content')
+            HtmlParser.download_url(tmp_abstract_file, use_selenium=True, url=url)
+
+            if os.path.exists(tmp_abstract_file):
+                abstract_html = HtmlParser.read_file(tmp_abstract_file, remove_after_read=True)
+                abstract_tag = abstract_html.find('meta', {'property': 'og:description'})
+                if abstract_tag != None:
+                    abstract = abstract_tag.get('content')
 
             articles.append(Article(title=title, url=url,
                             abstract=HtmlParser.clean_str(abstract), doi=doi))

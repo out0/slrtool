@@ -1,4 +1,4 @@
-#! /usr/bin/python3
+
 from typing import List, Tuple
 from io import StringIO
 import os
@@ -67,6 +67,7 @@ class HtmlParser:
         if HtmlParser.selenium_browser == None:
             HtmlParser.selenium_browser = HtmlParser.load_browser()
 
+        HtmlParser.selenium_browser.implicitly_wait(10)
         HtmlParser.selenium_browser.get(url)
         
         file = open(filename, mode='w')

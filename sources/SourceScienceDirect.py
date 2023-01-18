@@ -18,12 +18,25 @@ class SourceScienceDirect (ArticleSource):
 
         doi_tag = html_doc.find(
             'div', attrs={'id': 'article-identifier-links'})
+        
+        if doi_tag == None:
+            print("i dont know how to deal with this abstract...")
+            return doi, ""
+
         doi_tag_a = doi_tag.find('a', attrs={'class': 'doi'})
         doi = ""
-        if doi_tag != None:
-            doi = doi_tag_a.get('href')
-        if doi != None:
-            doi = doi.replace("https://doi.org/", "")
+
+        if doi_tag == None:
+            print("i dont know how to deal with this abstract...")
+            return doi, ""
+
+        doi = doi_tag_a.get('href')
+ 
+        if doi == None:
+            print("i dont know how to deal with this abstract...")
+            return doi, ""
+ 
+        doi = doi.replace("https://doi.org/", "")
 
         abstr = html_doc.find('div',  attrs={'id': "abstracts"})
         if abstr != None and (len(abstr.contents) > 0) and (len(abstr.contents[0].contents) > 1):
@@ -93,7 +106,7 @@ class SourceScienceDirect (ArticleSource):
 
         for i in range(1, pages):
             url = f"{searchLink.search_link}&show=100&offset={i*100}"
-            filename_list.append(HtmlParser.download_url_selenium_wait_for_element_by_id(f"{download_path}/science/science_0.html", url=url, id="srp-results-list"))
+            filename_list.append(HtmlParser.download_url_selenium_wait_for_element_by_id(f"{download_path}/science/science_{i}.html", url=url, id="srp-results-list"))
 
         print("processing files\n")
 
