@@ -2,3 +2,4 @@
 data
 __pycache__
 geckodriver.log
+deleted_doi.txt
