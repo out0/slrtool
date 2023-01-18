@@ -1,13 +1,13 @@
-from model.ArticleDatabase import *
-from model.Article import *
 from typing import List, Tuple, Callable
-from io import StringIO
 import os
 import sys
-import csv
 import os.path
-sys.path.append('../model')
 
+sys.path.append('../model')
+sys.path.append('../util')
+from model.ArticleDatabase import *
+from model.Article import *
+from util.ArticleCSVReader import *
 
 class ExclusionFilter:
     unique: ArticleDatabase
@@ -15,40 +15,20 @@ class ExclusionFilter:
     filter_articles_config: dict
     output_path: str
 
-    def __init__(self, filter_articles_config: dict, raw_path: str, output_path: str):
-        self.output_path = output_path
+    def __init__(self, filter_articles_config: dict, unfiltered_path: str, output_filtered_path: str):
+        self.output_path = output_filtered_path
         self.filter_articles_config = filter_articles_config
 
         self.unique = ArticleDatabase(
-            ieee=ExclusionFilter.__import_from_csv(f"{raw_path}/ieee.csv"),
-            science=ExclusionFilter.__import_from_csv(
-                f"{raw_path}/science.csv"),
-            acm=ExclusionFilter.__import_from_csv(f"{raw_path}/acm.csv"),
-            springer=ExclusionFilter.__import_from_csv(
-                f"{raw_path}/springer.csv"),
-            wiley=ExclusionFilter.__import_from_csv(f"{raw_path}/wiley.csv")
+            ieee=ArticleCSVReader.import_from_csv(f"{unfiltered_path}/ieee.csv"),
+            science=ArticleCSVReader.import_from_csv(
+                f"{unfiltered_path}/science.csv"),
+            acm=ArticleCSVReader.import_from_csv(f"{unfiltered_path}/acm.csv"),
+            springer=ArticleCSVReader.import_from_csv(
+                f"{unfiltered_path}/springer.csv"),
+            wiley=ArticleCSVReader.import_from_csv(f"{unfiltered_path}/wiley.csv")
         )
 
-    def __import_from_csv(csv_file: str) -> List[Article]:
-        file = open(csv_file, mode='r')
-        csv_doc = file.read()
-        file.close()
-
-        lines = csv_doc.splitlines()
-        articles: List[Article] = []
-
-        reader = csv.reader(
-            lines[1:], quoting=csv.QUOTE_ALL, skipinitialspace=True)
-        for row in reader:
-            title = row[0].replace("\"", "").strip()
-            abstract = row[1].replace("\"", "").strip()
-            doi = row[2].replace("\"", "").strip()
-            url = row[3].replace("\"", "").strip()
-
-            articles.append(Article(title=title, url=url,
-                            abstract=abstract, doi=doi))
-
-        return articles
 
     def __filter_dedup(base: List[Article], target: List[Article]) -> Tuple[List[Article], List[Article]]:
         base_title = dict()

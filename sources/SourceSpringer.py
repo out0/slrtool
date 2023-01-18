@@ -73,5 +73,5 @@ class SourceSpringer (ArticleSource):
             print(f"Springer exports the search result directly from the website. Please export the CSV first to {input_csv_filename}")
             exit(1)
     
-        self.exportCSVData([input_csv_filename], f"{output_csv_path}/springer/ieee.csv")
+        self.exportCSVData([input_csv_filename], f"{output_csv_path}/springer.csv")
 

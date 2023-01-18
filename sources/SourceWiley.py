@@ -68,8 +68,8 @@ class SourceWiley (ArticleSource):
 
         records = self.parseListArticles(filename_list[0])
 
-        pages = self.count_pages(records, 50)
-        print(f"found {records} records - paginating in {pages}\n")
+        pages = self.count_pages(len(records), 50)
+        print(f"found {len(records)} records - paginating in {pages}\n")
 
         for i in range(1, pages):
             url = f"{searchLink.search_link}&pageSize=50&startPage={i}\n"

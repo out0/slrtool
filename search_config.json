@@ -1,18 +1,4 @@
 {
-    "selected_articles_path": {
-        "acm": "/home/cristiano/Documents/Projects/Mestrado/SLR-Unstructured/selected-articles/acm",
-        "ieee": "/home/cristiano/Documents/Projects/Mestrado/SLR-Unstructured/selected-articles/ieee",
-        "science": "/home/cristiano/Documents/Projects/Mestrado/SLR-Unstructured/selected-articles/science",
-        "springer": "/home/cristiano/Documents/Projects/Mestrado/SLR-Unstructured/selected-articles/springer",
-        "wiley": "/home/cristiano/Documents/Projects/Mestrado/SLR-Unstructured/selected-articles/wiley"
-    },
-    "count-all": {
-        "acm": "518",
-        "ieee": "58",
-        "science": "429",
-        "springer": "268",
-        "wiley": "513"
-    },
     "queries": {
         "acm": {
             "title": "(\"unstructured\" OR \"offroad\" OR \"semi-structured\" OR \"non-urban\") AND (\"path planning\" OR \"motion planning\" OR \"trajectory planning\" OR \"self-driving\" OR \"autonomous\") NOT \"UAV\" NOT \"indoor\" NOT \"UVMS\" NOT \"water\"  NOT \"submerged\"   NOT \"SOCIAL\" ",
@@ -34,5 +20,12 @@
         "wiley": {
             "query": "(\"unstructured\" OR \"offroad\" OR \"semi-structured\" OR \"non-urban\") AND (\"path planning\" OR \"motion planning\" OR \"trajectory planning\" OR \"self-driving\" OR \"autonomous\")"
         }
+    },
+    "paths": {
+        "raw": "data/raw",
+        "no-filter": "data/unfiltered",
+        "auto-filter": "data/filtered",
+        "manual-filter": "data/manually_filtered",
+        "export-deleted-doi-file": "./deleted_doi.txt"
     }
 }

@@ -9,12 +9,15 @@ from model.Article import *
 from util.LatexBuilder import *
 from util.HtmlParser import *
 from util.ExclusionFilter import *
+from util.ExportDeletedDOI import *
+
 from sources.SourceWiley import *
 from sources.SourceSpringer import *
 from sources.SourceScienceDirect import *
 from sources.SourceIEEE import *
 from sources.SourceAcm import *
 from sources.ArticleSource import *
+
 from typing import List
 import os
 import os.path
@@ -35,8 +38,9 @@ class UI:
         print("Select an action\n\n")
         print("(1) Search link")
         print("(2) Generate LaTex code")
-        print("(3) Download raw list of articles from a source\n")
-        print("(4) Apply exclusion criteria to the articles\n")
+        print("(3) Download raw list of articles from a source")
+        print("(4) Apply exclusion criteria to the articles")
+        print("(5) Generate list of excluded DOI between auto-filtered and manual-filtered\n")
         return input()
 
     def show_search_result(result: SearchLinkResult) -> None:
@@ -77,10 +81,13 @@ class UI:
         source, source_key = UI.select_source() 
         if source == None: return
 
-        os.system(f"mkdir -p data/raw")
-        os.system(f"mkdir -p data/unfiltered")
+        raw_path = config["paths"]["raw"]
+        output_no_filter = config["paths"]["no-filter"]
+
+        os.system(f"mkdir -p {raw_path}")
+        os.system(f"mkdir -p {output_no_filter}")
         searchLink = source.buildSearchLink(terms[source_key])
-        source.buildUnfilteredArticleCSV(searchLink, f"data/raw" ,f"data/unfiltered")
+        source.buildUnfilteredArticleCSV(searchLink, raw_path , output_no_filter)
         print("Done. please check folder data/unfiltered \n")
 
 def count_files_in_path(path: str) -> int:
@@ -137,14 +144,31 @@ def main() -> None:
 
                 with open('filter_config.json', 'r') as filter_config:
                     filter = ExclusionFilter(
-                        raw_path="data/raw",
-                        output_path="data/filtered",
-                        filter_articles_config=filter_config
+                        unfiltered_path=config["paths"]["no-filter"],
+                        output_filtered_path=config["paths"]["auto-filter"],
+                        filter_articles_config=json.load(filter_config)
                     )
                     filter.filter()
-                
+            case '5':
+                os.system("clear")
+                origin_path = config["paths"]["auto-filter"]
+                compare_path= config["paths"]["manual-filter"]
+                export_file = config["paths"]["export-deleted-doi-file"]
+
+                os.system(f"mkdir -p {origin_path}")
+                os.system(f"mkdir -p {compare_path}")
+
+                print(f"Exporting deleted DOI from diff between {origin_path} and {compare_path} to {export_file}")
+
+                ExportDeletedDOI.export(
+                    origin_path=origin_path,
+                    compare_path=compare_path,
+                    result_file=export_file,
+                )
+
             case _:
                 return
+    os.system("rm -rf geckodriver.log")
 
 if __name__ == "__main__":
     main()

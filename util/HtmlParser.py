@@ -98,7 +98,7 @@ class HtmlParser:
             
         if HtmlParser.selenium_browser == None:
             HtmlParser.selenium_browser = HtmlParser.load_browser()
-            #HtmlParser.selenium_browser.implicitly_wait(30)
+            HtmlParser.selenium_browser.implicitly_wait(120)
             HtmlParser.selenium_browser.get(url)
             try:
                 WebDriverWait(HtmlParser.selenium_browser, 30).until(
@@ -110,6 +110,8 @@ class HtmlParser:
                 return filename
             except:
                 return None
+        
+        return filename
 
     def read_file(filename: str, remove_after_read: bool = False) -> BeautifulSoup:
         file = open(filename, mode='r')

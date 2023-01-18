@@ -89,7 +89,9 @@ class SourceScienceDirect (ArticleSource):
 
         url = f"{searchLink.search_link}&show=100"
         filename_list = []
-        filename_list.append(HtmlParser.download_url_selenium_wait_for_element_by_id(f"{download_path}/science/science_0.html", url=url, id="srp-results-list"))
+        file = f"{download_path}/science/science_0.html"
+        print(f"downloading to {file}")
+        filename_list.append(HtmlParser.download_url_selenium_wait_for_element_by_id(file, url=url, id="srp-results-list"))
         if (filename_list[0] == None):
             print(f"Could not find the element 'srp-results-list' with the list of articles from Science Direct url {url}. Maybe they have changed the layout?\n")
             exit(1)
@@ -106,7 +108,9 @@ class SourceScienceDirect (ArticleSource):
 
         for i in range(1, pages):
             url = f"{searchLink.search_link}&show=100&offset={i*100}"
-            filename_list.append(HtmlParser.download_url_selenium_wait_for_element_by_id(f"{download_path}/science/science_{i}.html", url=url, id="srp-results-list"))
+            file = f"{download_path}/science/science_{i}.html"
+            print(f"downloading {file}")
+            filename_list.append(HtmlParser.download_url_selenium_wait_for_element_by_id(file, url=url, id="srp-results-list"))
 
         print("processing files\n")
 
