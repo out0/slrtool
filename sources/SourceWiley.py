@@ -9,6 +9,12 @@ from ArticleSource import *
 from HtmlParser import *
 
 class SourceWiley (ArticleSource):
+
+    enable_download_abstract: bool
+
+    def __init__(self):
+        self.enable_download_abstract = False
+
     def parseListArticles(self, file: str) -> List[Article]:
         html = HtmlParser.read_file(file, False)
 
@@ -24,12 +30,12 @@ class SourceWiley (ArticleSource):
             abstr_link_tag = atag.find(
                 'div', attrs={'class': "accordion__content"})
 
-            if (abstr_link_tag != None):
+            if (abstr_link_tag != None and self.enable_download_abstract):
                 abstr_link = f"https://onlinelibrary.wiley.com{abstr_link_tag.get('data-ajax-content')}"
                 tmp_abstract_file = "temp_abstract.html"
 
                 HtmlParser.download_url(
-                    tmp_abstract_file, abstr_link, use_selenium=True)
+                    tmp_abstract_file, abstr_link, use_selenium=False)
 
                 abstr_file_html = HtmlParser.read_file(
                     tmp_abstract_file, remove_after_read=True)
@@ -66,12 +72,14 @@ class SourceWiley (ArticleSource):
         filename_list.append(HtmlParser.download_source_page(
             f"{download_path}/wiley/wiley_0.html", f"{searchLink.search_link}&pageSize=50&startPage=0", use_selenium=True))
 
-        records = self.parseListArticles(filename_list[0])
+        self.enable_download_abstract = False
+        num_records = self.parseCountArticles(filename_list[0])
 
-        pages = self.count_pages(len(records), 50)
-        print(f"found {len(records)} records - paginating in {pages}\n")
+        pages = self.count_pages(num_records, 50)
+        print(f"found {num_records} records - paginating in {pages}\n")
 
-        for i in range(1, pages):
+        for i in range(0, pages):
+            self.enable_download_abstract = True
             url = f"{searchLink.search_link}&pageSize=50&startPage={i}\n"
             filename_list.append(HtmlParser.download_source_page(f"{download_path}/wiley/wiley_{i}.html", url, use_selenium=True))
 

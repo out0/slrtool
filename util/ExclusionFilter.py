@@ -1,3 +1,6 @@
+from util.ArticleCSVReader import *
+from model.Article import *
+from model.ArticleDatabase import *
 from typing import List, Tuple, Callable
 import os
 import sys
@@ -5,9 +8,7 @@ import os.path
 
 sys.path.append('../model')
 sys.path.append('../util')
-from model.ArticleDatabase import *
-from model.Article import *
-from util.ArticleCSVReader import *
+
 
 class ExclusionFilter:
     unique: ArticleDatabase
@@ -20,15 +21,16 @@ class ExclusionFilter:
         self.filter_articles_config = filter_articles_config
 
         self.unique = ArticleDatabase(
-            ieee=ArticleCSVReader.import_from_csv(f"{unfiltered_path}/ieee.csv"),
+            ieee=ArticleCSVReader.import_from_csv(
+                f"{unfiltered_path}/ieee.csv"),
             science=ArticleCSVReader.import_from_csv(
                 f"{unfiltered_path}/science.csv"),
             acm=ArticleCSVReader.import_from_csv(f"{unfiltered_path}/acm.csv"),
             springer=ArticleCSVReader.import_from_csv(
                 f"{unfiltered_path}/springer.csv"),
-            wiley=ArticleCSVReader.import_from_csv(f"{unfiltered_path}/wiley.csv")
+            wiley=ArticleCSVReader.import_from_csv(
+                f"{unfiltered_path}/wiley.csv")
         )
-
 
     def __filter_dedup(base: List[Article], target: List[Article]) -> Tuple[List[Article], List[Article]]:
         base_title = dict()
@@ -59,6 +61,31 @@ class ExclusionFilter:
 
             if unique:
                 non_dup.append(t)
+
+        return (dup, non_dup)
+
+    def __filter_dedup_self(base: List[Article]) -> Tuple[List[Article], List[Article]]:
+        base_title = dict()
+        base_doi = dict()
+
+        dup: List[Article] = []
+        non_dup: List[Article] = []
+
+        i = 0
+        for b in base:
+            if len(b.doi.strip()) > 0:
+                if b.doi.upper().strip() in base_doi:
+                    dup.append(b)
+                else:
+                    base_doi[b.doi.upper().strip()] = 1
+                    non_dup.append(b)
+            elif len(b.title.strip()) > 0:
+                if b.title.upper().strip() in base_title:
+                    dup.append(b)
+                else:
+                    base_title[b.title.upper().strip()] = 1
+                    non_dup.append(b)
+            i += 1
 
         return (dup, non_dup)
 
@@ -126,6 +153,23 @@ class ExclusionFilter:
         duplicated.wiley.extend(wiley_dup)
 
         unique.wiley = wiley_nondup
+
+    def __dedup_self(unique: ArticleDatabase) -> int:
+        dup_lst: List[Article] = []
+        [dup, unique.acm] = ExclusionFilter.__filter_dedup_self(unique.acm)
+        dup_lst.extend(dup)
+        [dup, unique.ieee] = ExclusionFilter.__filter_dedup_self(unique.ieee)
+        dup_lst.extend(dup)
+        [dup, unique.science] = ExclusionFilter.__filter_dedup_self(
+            unique.science)
+        dup_lst.extend(dup)
+        [dup, unique.springer] = ExclusionFilter.__filter_dedup_self(
+            unique.springer)
+        dup_lst.extend(dup)
+        [dup, unique.wiley] = ExclusionFilter.__filter_dedup_self(unique.wiley)
+        dup_lst.extend(dup)
+
+        return len(dup_lst)
 
     def __apply_filter_remove(keys: List[str], unique: ArticleDatabase, remove_func: Callable) -> ArticleDatabase:
         removed = ArticleDatabase(
@@ -231,11 +275,13 @@ class ExclusionFilter:
             springer=[],
             wiley=[]
         )
+
+        num_self_dup = ExclusionFilter.__dedup_self(self.unique)
         ExclusionFilter.__dedup_science(self.unique, duplicated)
         ExclusionFilter.__dedup_acm(self.unique, duplicated)
         ExclusionFilter.__dedup_springer(self.unique, duplicated)
         ExclusionFilter.__dedup_wiley(self.unique, duplicated)
-        print(f"removed from deduplication: {len(duplicated)}")
+        print(f"removed from deduplication: {len(duplicated) + num_self_dup}")
 
         not_included = ExclusionFilter.__apply_filter_remove(
             self.filter_articles_config["include_key"], self.unique, ExclusionFilter.__apply_filter_include_source)
@@ -255,23 +301,37 @@ class ExclusionFilter:
         print(
             f"keywords filter: removed for analisys {len(to_analyze)} articles")
 
-        print (f"Remaining:{len(self.unique)} articles")
+        print(f"Remaining:{len(self.unique)} articles")
 
-        ExclusionFilter.__export_to_csv(f"{self.output_path}/acm.csv", self.unique.acm)
-        ExclusionFilter.__export_to_csv(f"{self.output_path}/ieee.csv", self.unique.ieee)
-        ExclusionFilter.__export_to_csv(f"{self.output_path}/science.csv", self.unique.science)
-        ExclusionFilter.__export_to_csv(f"{self.output_path}/springer.csv", self.unique.springer)
-        ExclusionFilter.__export_to_csv(f"{self.output_path}/wiley.csv", self.unique.wiley)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/acm.csv", self.unique.acm)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/ieee.csv", self.unique.ieee)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/science.csv", self.unique.science)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/springer.csv", self.unique.springer)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/wiley.csv", self.unique.wiley)
 
-        ExclusionFilter.__export_to_csv(f"{self.output_path}/acm_del.csv", removed.acm)
-        ExclusionFilter.__export_to_csv(f"{self.output_path}/ieee_del.csv", removed.ieee)
-        ExclusionFilter.__export_to_csv(f"{self.output_path}/science_del.csv", removed.science)
-        ExclusionFilter.__export_to_csv(f"{self.output_path}/springer_del.csv", removed.springer)
-        ExclusionFilter.__export_to_csv(f"{self.output_path}/wiley_del.csv", removed.wiley)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/acm_del.csv", removed.acm)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/ieee_del.csv", removed.ieee)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/science_del.csv", removed.science)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/springer_del.csv", removed.springer)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/wiley_del.csv", removed.wiley)
 
-        ExclusionFilter.__export_to_csv(f"{self.output_path}/acm_chk.csv", to_analyze.acm)
-        ExclusionFilter.__export_to_csv(f"{self.output_path}/ieee_chk.csv", to_analyze.ieee)
-        ExclusionFilter.__export_to_csv(f"{self.output_path}/science_chk.csv", to_analyze.science)
-        ExclusionFilter.__export_to_csv(f"{self.output_path}/springer_chk.csv", to_analyze.springer)
-        ExclusionFilter.__export_to_csv(f"{self.output_path}/wiley_chk.csv", to_analyze.wiley)
-
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/acm_chk.csv", to_analyze.acm)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/ieee_chk.csv", to_analyze.ieee)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/science_chk.csv", to_analyze.science)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/springer_chk.csv", to_analyze.springer)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/wiley_chk.csv", to_analyze.wiley)
