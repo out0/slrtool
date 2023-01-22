@@ -335,3 +335,14 @@ class ExclusionFilter:
             f"{self.output_path}/springer_chk.csv", to_analyze.springer)
         ExclusionFilter.__export_to_csv(
             f"{self.output_path}/wiley_chk.csv", to_analyze.wiley)
+
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/acm_not_included.csv", not_included.acm)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/ieee_not_included.csv", not_included.ieee)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/science_not_included.csv", not_included.science)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/springer_not_included.csv", not_included.springer)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/wiley_not_included.csv", not_included.wiley)
