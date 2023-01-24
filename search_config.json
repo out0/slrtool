@@ -19,6 +19,15 @@
         },
         "wiley": {
             "query": "(\"unstructured\" OR \"offroad\" OR \"semi-structured\" OR \"non-urban\") AND (\"path planning\" OR \"motion planning\" OR \"trajectory planning\" OR \"self-driving\" OR \"autonomous\")"
+        },
+        "arxiv": {
+            "terms": [
+                "path planning",
+                "motion planning",
+                "trajectory planning",
+                "self-driving",
+                "driveless"
+            ]
         }
     },
     "paths": {
@@ -29,3 +38,5 @@
         "export-deleted-doi-file": "./deleted_doi.txt"
     }
 }
+
+

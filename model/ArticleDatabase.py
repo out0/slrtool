@@ -8,15 +8,17 @@ class ArticleDatabase:
     science: List[Article]
     springer: List[Article]
     wiley: List[Article]
+    arxiv: List[Article]
 
-    def __init__(self, acm: List[Article], ieee: List[Article], science: List[Article], springer: List[Article], wiley: List[Article]) -> None:
+    def __init__(self, acm: List[Article], ieee: List[Article], science: List[Article], springer: List[Article], wiley: List[Article], arxiv: List[Article]) -> None:
         self.acm = acm
         self.ieee = ieee
         self.science = science
         self.springer = springer
         self.wiley = wiley
+        self.arxiv = arxiv
 
     def __len__(self) -> int:
-        return len(self.acm) + len(self.ieee) + len(self.science) + len(self.springer) + len(self.wiley)
+        return len(self.acm) + len(self.ieee) + len(self.science) + len(self.springer) + len(self.wiley) + len(self.arxiv)
 
 

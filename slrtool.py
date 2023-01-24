@@ -16,6 +16,7 @@ from sources.SourceSpringer import *
 from sources.SourceScienceDirect import *
 from sources.SourceIEEE import *
 from sources.SourceAcm import *
+from sources.SourceArxiv import *
 from sources.ArticleSource import *
 
 from typing import List
@@ -31,7 +32,8 @@ class UI:
         print("(2) IEEE Xplore")
         print("(3) Science Direct")
         print("(4) Springer Link")
-        print("(5) Wiley\n")
+        print("(5) Wiley")
+        print("(6) Arxiv\n")
         return input()
 
     def menu() -> int:
@@ -65,6 +67,8 @@ class UI:
                 return [SourceSpringer(), "springer"]
             case '5':
                 return [SourceWiley(), "wiley"]
+            case '6':
+                return [SourceArxiv(), "arxiv"]
             case _:
                 return [ None, None ]
 

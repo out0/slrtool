@@ -29,7 +29,9 @@ class ExclusionFilter:
             springer=ArticleCSVReader.import_from_csv(
                 f"{unfiltered_path}/springer.csv"),
             wiley=ArticleCSVReader.import_from_csv(
-                f"{unfiltered_path}/wiley.csv")
+                f"{unfiltered_path}/wiley.csv"),
+            arxiv=ArticleCSVReader.import_from_csv(
+                f"{unfiltered_path}/arxiv.csv")                
         )
 
     def __filter_dedup(base: List[Article], target: List[Article]) -> Tuple[List[Article], List[Article]]:
@@ -154,31 +156,62 @@ class ExclusionFilter:
 
         unique.wiley = wiley_nondup
 
+    def __dedup_arxiv(unique: ArticleDatabase, duplicated: ArticleDatabase) -> None:
+        arxiv_dup, arxiv_nondup = ExclusionFilter.__filter_dedup(
+            unique.ieee, unique.arxiv)
+        ExclusionFilter.__dedup_message("ieee", "arxiv", arxiv_dup)
+        duplicated.arxiv.extend(arxiv_dup)
+
+        arxiv_dup, arxiv_nondup = ExclusionFilter.__filter_dedup(
+            unique.science, arxiv_nondup)
+        ExclusionFilter.__dedup_message("science", "arxiv", arxiv_dup)
+        duplicated.arxiv.extend(arxiv_dup)
+
+        arxiv_dup, arxiv_nondup = ExclusionFilter.__filter_dedup(
+            unique.acm, arxiv_nondup)
+        ExclusionFilter.__dedup_message("acm", "arxiv", arxiv_dup)
+        duplicated.arxiv.extend(arxiv_dup)
+
+        arxiv_dup, arxiv_nondup = ExclusionFilter.__filter_dedup(
+            unique.springer, arxiv_nondup)
+        ExclusionFilter.__dedup_message("springer", "arxiv", arxiv_dup)
+        duplicated.arxiv.extend(arxiv_dup)
+
+        arxiv_dup, arxiv_nondup = ExclusionFilter.__filter_dedup(
+            unique.wiley, arxiv_nondup)
+        ExclusionFilter.__dedup_message("wiley", "arxiv", arxiv_dup)
+        duplicated.arxiv.extend(arxiv_dup)
+
+
+        unique.arxiv = arxiv_nondup
+
+
     def __dedup_self(unique: ArticleDatabase) -> int:
         dup_lst: List[Article] = []
         [dup, unique.acm] = ExclusionFilter.__filter_dedup_self(unique.acm)
         dup_lst.extend(dup)
         [dup, unique.ieee] = ExclusionFilter.__filter_dedup_self(unique.ieee)
         dup_lst.extend(dup)
-        [dup, unique.science] = ExclusionFilter.__filter_dedup_self(
-            unique.science)
+        [dup, unique.science] = ExclusionFilter.__filter_dedup_self(unique.science)
         dup_lst.extend(dup)
-        [dup, unique.springer] = ExclusionFilter.__filter_dedup_self(
-            unique.springer)
+        [dup, unique.springer] = ExclusionFilter.__filter_dedup_self(unique.springer)
         dup_lst.extend(dup)
         [dup, unique.wiley] = ExclusionFilter.__filter_dedup_self(unique.wiley)
+        dup_lst.extend(dup)
+        [dup, unique.arxiv] = ExclusionFilter.__filter_dedup_self(unique.arxiv)
         dup_lst.extend(dup)
 
         return len(dup_lst)
 
     def __apply_filter_remove(keys: List[str], unique: ArticleDatabase, remove_func: Callable) -> ArticleDatabase:
         removed = ArticleDatabase(
-            acm=[], ieee=[], science=[], springer=[], wiley=[])
+            acm=[], ieee=[], science=[], springer=[], wiley=[], arxiv = [])
         removed.acm, unique.acm = remove_func(keys, unique.acm)
         removed.ieee, unique.ieee = remove_func(keys, unique.ieee)
         removed.science, unique.science = remove_func(keys, unique.science)
         removed.springer, unique.springer = remove_func(keys, unique.springer)
         removed.wiley, unique.wiley = remove_func(keys, unique.wiley)
+        removed.arxiv, unique.arxiv = remove_func(keys, unique.arxiv)
         return removed
 
     def __apply_filter_remove_source(keys: List[str], articles: List[Article]) -> Tuple[List[Article], List[Article]]:
@@ -273,7 +306,8 @@ class ExclusionFilter:
             ieee=[],
             science=[],
             springer=[],
-            wiley=[]
+            wiley=[],
+            arxiv=[]
         )
 
         num_self_dup = ExclusionFilter.__dedup_self(self.unique)
@@ -281,6 +315,7 @@ class ExclusionFilter:
         ExclusionFilter.__dedup_acm(self.unique, duplicated)
         ExclusionFilter.__dedup_springer(self.unique, duplicated)
         ExclusionFilter.__dedup_wiley(self.unique, duplicated)
+        ExclusionFilter.__dedup_arxiv(self.unique, duplicated)
         print(f"removed from deduplication: {len(duplicated) + num_self_dup}")
 
         not_included = ExclusionFilter.__apply_filter_remove(
@@ -313,6 +348,8 @@ class ExclusionFilter:
             f"{self.output_path}/springer.csv", self.unique.springer)
         ExclusionFilter.__export_to_csv(
             f"{self.output_path}/wiley.csv", self.unique.wiley)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/arxiv.csv", self.unique.arxiv)
 
         ExclusionFilter.__export_to_csv(
             f"{self.output_path}/acm_del.csv", removed.acm)
@@ -324,6 +361,8 @@ class ExclusionFilter:
             f"{self.output_path}/springer_del.csv", removed.springer)
         ExclusionFilter.__export_to_csv(
             f"{self.output_path}/wiley_del.csv", removed.wiley)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/arxiv_del.csv", removed.arxiv)
 
         ExclusionFilter.__export_to_csv(
             f"{self.output_path}/acm_chk.csv", to_analyze.acm)
@@ -335,6 +374,8 @@ class ExclusionFilter:
             f"{self.output_path}/springer_chk.csv", to_analyze.springer)
         ExclusionFilter.__export_to_csv(
             f"{self.output_path}/wiley_chk.csv", to_analyze.wiley)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/arxiv_chk.csv", to_analyze.arxiv)
 
         ExclusionFilter.__export_to_csv(
             f"{self.output_path}/acm_not_included.csv", not_included.acm)
@@ -346,3 +387,5 @@ class ExclusionFilter:
             f"{self.output_path}/springer_not_included.csv", not_included.springer)
         ExclusionFilter.__export_to_csv(
             f"{self.output_path}/wiley_not_included.csv", not_included.wiley)
+        ExclusionFilter.__export_to_csv(
+            f"{self.output_path}/arxiv_not_included.csv", not_included.arxiv)
