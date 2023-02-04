@@ -18,7 +18,8 @@
             "append_query_text": "discipline: Computer Science + Sub-discipline: Artificial Intelligence + filter by Article"
         },
         "wiley": {
-            "query": "(\"unstructured\" OR \"offroad\" OR \"semi-structured\" OR \"non-urban\") AND (\"path planning\" OR \"motion planning\" OR \"trajectory planning\" OR \"self-driving\" OR \"autonomous\")"
+            "query": "\"path planning\" OR \"motion planning\" OR \"trajectory planning\"",
+            "query_old": "(\"unstructured\" OR \"offroad\" OR \"semi-structured\" OR \"non-urban\") AND (\"path planning\" OR \"motion planning\" OR \"trajectory planning\" OR \"self-driving\" OR \"autonomous\")"
         },
         "arxiv": {
             "terms": [
@@ -27,6 +28,13 @@
                 "trajectory planning",
                 "self-driving",
                 "driveless"
+            ]
+        },
+        "mdpi": {
+            "terms": [
+                "path planning",
+                "motion planning",
+                "trajectory planning"
             ]
         }
     },

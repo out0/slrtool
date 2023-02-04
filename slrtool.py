@@ -17,7 +17,9 @@ from sources.SourceScienceDirect import *
 from sources.SourceIEEE import *
 from sources.SourceAcm import *
 from sources.SourceArxiv import *
+from sources.SourceMDPI import *
 from sources.ArticleSource import *
+
 
 from typing import List
 import os
@@ -33,7 +35,8 @@ class UI:
         print("(3) Science Direct")
         print("(4) Springer Link")
         print("(5) Wiley")
-        print("(6) Arxiv\n")
+        print("(6) MDPI")        
+        print("(7) Arxiv\n")
         return input()
 
     def menu() -> int:
@@ -68,6 +71,8 @@ class UI:
             case '5':
                 return [SourceWiley(), "wiley"]
             case '6':
+                return [SourceMDPI(), "mdpi"]
+            case '7':
                 return [SourceArxiv(), "arxiv"]
             case _:
                 return [ None, None ]

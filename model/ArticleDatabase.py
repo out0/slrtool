@@ -2,23 +2,37 @@ from typing import List, Tuple
 
 from Article import *
 
-class ArticleDatabase:
-    acm: List[Article]
-    ieee: List[Article]
-    science: List[Article]
-    springer: List[Article]
-    wiley: List[Article]
-    arxiv: List[Article]
 
-    def __init__(self, acm: List[Article], ieee: List[Article], science: List[Article], springer: List[Article], wiley: List[Article], arxiv: List[Article]) -> None:
-        self.acm = acm
-        self.ieee = ieee
-        self.science = science
-        self.springer = springer
-        self.wiley = wiley
-        self.arxiv = arxiv
+class ArticleDatabase:
+    source: dict
+
+    def __init__(self, 
+        acm: List[Article] = [], 
+        ieee: List[Article] = [], 
+        science: List[Article] = [], 
+        springer: List[Article] = [], 
+        wiley: List[Article] = [], 
+        mdpi: List[Article] = [], 
+        arxiv: List[Article] = []) -> None:
+        
+        self.source = {
+            "acm": acm,
+            "ieee": ieee,
+            "science": science,
+            "springer": springer,
+            "wiley": wiley,
+            "mdpi": mdpi,
+            "arxiv": arxiv
+        }
+
+    def get(self, key:str) -> List[Article]:
+        return self.source[key]
+
+    def set(self, key:str, data:List[Article]) -> None:
+        self.source[key] = data
 
     def __len__(self) -> int:
-        return len(self.acm) + len(self.ieee) + len(self.science) + len(self.springer) + len(self.wiley) + len(self.arxiv)
-
-
+        res:int = 0
+        for _, val in self.source.items():
+            res += len(val)
+        return res

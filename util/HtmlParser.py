@@ -12,7 +12,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-import sys
+import sys, time
 sys.path.append('../model')
 from model.Article import *
 
@@ -49,11 +49,23 @@ class HtmlParser:
 
         file.close()
 
-    def download_source_page(file: str, url: str, use_selenium: bool = False, cookies_file: str = None) -> None:
+    def download_source_page(file: str, url: str, use_selenium: bool = False, cookies_file: str = None, wait_after: int = 0) -> None:
         if not os.path.exists(file):
             HtmlParser.download_url(file, url, use_selenium, cookies_file)
 
+            if wait_after > 0:
+                print(f"waiting {wait_after}s to avoid blocking")
+                time.sleep(wait_after)
+
+
+
+
         return file
+
+    def close_browser():
+        if HtmlParser.selenium_browser == None: return
+        HtmlParser.selenium_browser.close()
+        HtmlParser.selenium_browser = None
 
     def load_browser():
         options = Options()

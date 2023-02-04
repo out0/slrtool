@@ -35,7 +35,8 @@ class SourceWiley (ArticleSource):
                 tmp_abstract_file = "temp_abstract.html"
 
                 HtmlParser.download_url(
-                    tmp_abstract_file, abstr_link, use_selenium=False)
+                    tmp_abstract_file, abstr_link, use_selenium=True)
+                HtmlParser.close_browser()
 
                 abstr_file_html = HtmlParser.read_file(
                     tmp_abstract_file, remove_after_read=True)
@@ -81,7 +82,8 @@ class SourceWiley (ArticleSource):
         for i in range(0, pages):
             self.enable_download_abstract = True
             url = f"{searchLink.search_link}&pageSize=50&startPage={i}\n"
-            filename_list.append(HtmlParser.download_source_page(f"{download_path}/wiley/wiley_{i}.html", url, use_selenium=True))
+            filename_list.append(HtmlParser.download_source_page(f"{download_path}/wiley/wiley_{i}.html", url, use_selenium=True, wait_after=10))
+            HtmlParser.close_browser()
 
         print("processing files\n")
 
