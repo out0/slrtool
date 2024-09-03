@@ -57,8 +57,11 @@ class SourceMDPI (ArticleSource):
 
         res = SearchLinkResult()
         res.source_name = "MDPI"
-        res.search_query = search_query
-        res.search_link = f"https://www.mdpi.com/search?sort=pubdate&page_count=200&year_from=2010&year_to=2022&subjects=engineering%2Ccomputer-math&view=default&advanced={search_text}"
+        # res.search_query = search_query
+        # res.search_link = f"https://www.mdpi.com/search?sort=pubdate&page_count=200&year_from=2014&year_to=2024&subjects=engineering%2Ccomputer-math&view=default&advanced={search_text}"
+
+        res.search_query = "(@(all)path%20planning)|(@(all)motion%20planning)|(@(all)trajectory%20planning@(abstract)unstructured)"
+        res.search_link = "https://www.mdpi.com/search?sort=pubdate&page_count=50&advanced=%28%40%28title%2Cabstract%2Ckeywords%2Cauthors%2Caffiliations%2Cdoi%2Cfull_text%2Creferences%29path+planning%29%7C%28%40%28title%2Cabstract%2Ckeywords%2Cauthors%2Caffiliations%2Cdoi%2Cfull_text%2Creferences%29motion+planning%29%7C%28%40%28title%2Cabstract%2Ckeywords%2Cauthors%2Caffiliations%2Cdoi%2Cfull_text%2Creferences%29trajectory+planning%40%28abstract%29unstructured%29&year_from=2014&year_to=2024&featured=&subjects=&journals=&article_types=&countries="
 
         return res
 

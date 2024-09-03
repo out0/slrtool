@@ -71,7 +71,7 @@ class HtmlParser:
         options = Options()
         options.add_argument("--headless")
         options.add_argument("--window-size=1920,1080")
-        options.binary = "/usr/bin/firefox"
+        options.binary_location = "/usr/bin/firefox"
 
         return webdriver.Firefox(options=options)
 

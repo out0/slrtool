@@ -81,7 +81,7 @@ class SourceScienceDirect (ArticleSource):
         res = SearchLinkResult()
         res.source_name = "Science Direct"
         res.search_query = f"({query})"
-        res.search_link = f"https://www.sciencedirect.com/search?date=2010-2023&qs={ArticleSource.transform_url(query)}&lastSelectedFacet=publicationTitles&publicationTitles=271599%2C280203"
+        res.search_link = f"https://www.sciencedirect.com/search?date=2014-2024&qs={ArticleSource.transform_url(query)}&lastSelectedFacet=publicationTitles&publicationTitles=271599%2C280203"
         return res
 
     def buildUnfilteredArticleCSV(self, searchLink: SearchLinkResult, download_path: str, output_csv_path: str) -> None:

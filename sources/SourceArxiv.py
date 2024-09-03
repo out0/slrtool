@@ -48,7 +48,7 @@ class SourceArxiv (ArticleSource):
         return int(p[i+2:].replace('results', '').replace(',', '').strip())
     
     def buildSearchLink(self, terms: dict) -> SearchLinkResult:
-        search_url = "&classification-computer_science=y&classification-physics_archives=all&classification-include_cross_list=include&date-year=&date-filter_by=date_range&date-from_date=2010-01-01&date-to_date=2022-12-31&date-date_type=submitted_date&abstracts=show&size=200&order=-announced_date_first"
+        search_url = "&classification-computer_science=y&classification-physics_archives=all&classification-include_cross_list=include&date-year=&date-filter_by=date_range&date-from_date=2014-01-01&date-to_date=2024-12-31&date-date_type=submitted_date&abstracts=show&size=200&order=-announced_date_first"
         search_query = ""
 
         i:int = 0

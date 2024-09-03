@@ -61,7 +61,7 @@ class SourceWiley (ArticleSource):
         res = SearchLinkResult()
         res.source_name = "Wiley"
         res.search_query = f"({query})"
-        res.search_link = f"https://onlinelibrary.wiley.com/action/doSearch?AllField={ArticleSource.transform_url(query)}&AfterMonth=1&AfterYear=2010&BeforeMonth=12&BeforeYear=2022&ConceptID=68"
+        res.search_link = f"https://onlinelibrary.wiley.com/action/doSearch?AllField={ArticleSource.transform_url(query)}&AfterMonth=1&AfterYear=2014&BeforeMonth=12&BeforeYear=2025&ConceptID=68"
         return res
 
     def buildUnfilteredArticleCSV(self, searchLink: SearchLinkResult, download_path: str, output_csv_path: str) -> None:

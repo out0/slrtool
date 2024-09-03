@@ -1,3 +1,7 @@
-beautifulsoup4==4.11.1
-pyperclip==1.8.2
-selenium==4.7.2
+#beautifulsoup4==4.11.1
+#pyperclip==1.8.2
+#selenium==4.7.2
+
+beautifulsoup4
+pyperclip
+selenium

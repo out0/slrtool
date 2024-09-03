@@ -71,7 +71,7 @@ class SourceAcm (ArticleSource):
         res = SearchLinkResult()
         res.source_name = "ACM Digital Library"
         res.search_query = search_text
-        res.search_link = f"https://dl.acm.org/action/doSearch?expand=all&AfterMonth=1&AfterYear=2010&AllField={ArticleSource.transform_url(search_text)}"
+        res.search_link = f"https://dl.acm.org/action/doSearch?expand=all&AfterMonth=1&AfterYear=2014&AllField={ArticleSource.transform_url(search_text)}"
 
         return res
 

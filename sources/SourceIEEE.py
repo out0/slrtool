@@ -68,7 +68,7 @@ class SourceIEEE (ArticleSource):
         res = SearchLinkResult()
         res.source_name = "IEEE Xplore"
         res.search_query = f"({search_text})"
-        res.search_link = f"https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&ranges=2010_2022_Year&queryText={ ArticleSource.transform_url(search_text)}"
+        res.search_link = f"https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&ranges=2014_2024_Year&queryText={ ArticleSource.transform_url(search_text)}"
 
         return res
 

@@ -62,7 +62,7 @@ class SourceSpringer (ArticleSource):
         res = SearchLinkResult()
         res.source_name = "Springer Link"
         res.search_query = f"({query})"
-        res.search_link = f"https://link.springer.com/search?query={ArticleSource.transform_url(query)}&date-facet-mode=between&facet-start-year=2010&facet-sub-discipline=%22Artificial+Intelligence%22&facet-content-type=%22Article%22&facet-language=%22En%22&facet-end-year=2022&facet-sub-discipline=%22Robotics+and+Automation%22"
+        res.search_link = f"https://link.springer.com/search?query={ArticleSource.transform_url(query)}&date-facet-mode=between&facet-start-year=2014&facet-sub-discipline=%22Artificial+Intelligence%22&facet-content-type=%22Article%22&facet-language=%22En%22&facet-end-year=2022&facet-sub-discipline=%22Robotics+and+Automation%22"
         return res
 
     def buildUnfilteredArticleCSV(self, searchLink: SearchLinkResult, download_path: str, output_csv_path: str) -> None:
